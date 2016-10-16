@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Carrito</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            #articulos div {
+                display: inline-block;
+                border: solid 1px;
+
+            }
+            #carrito div {
+                display: inline-block;
+                border: solid 1px;
+
+            }
+            #carrito div div {
+                display: block;
+            }
+            
+            div p {
+               vertical-align: bottom;
+            }
+
+            image {
+                width: 200px;
+                height: 200px;
+                padding: 5px;
+            }
+            #totalCarrito{
+                font-size: 1.5em;
+            }
+        </style>
+        <script>
+            var listaCarrito = ["vacio"];
+            var listaPrecios = [0];
+            var listaUnidades = [0];
+            var listaPreciosTotales = [0];
+            var totalCarrito = 0;
+            
+            function anadirArticulo(idArticulo){
+                var articuloAnadido = false;
+                for(var i=0; i<listaCarrito.length;){
+                    if(idArticulo === listaCarrito[i]){
+                        articuloAnadido = true;
+                    }
+                }
+                if(articuloAnadido){
+                    listaCarrito.push(idArticulo);
+                    /* Copio el articulo, le cambio el id, y lo inserto */
+                    var nodo = document.getElementById(idArticulo);
+                    var div = nodo.cloneNode(true);
+                    var idArticuloCarrito = idArticulo+"Carrito";
+                    div.id = idArticuloCarrito;
+                    /*quitamos el atributo onclick para evitar interferencias con 
+                     * los botones de "borrar" y "borrar todo". Para añadir solo
+                     * usremos los div de los productos.*/
+                    div.removeAttribute("onclick");
+                    document.getElementById("carrito").appendChild(div);
+                     /* Creo un parrafo para las unidades y lo inserto */
+                    var pUnidades = document.createNode("p");
+                    var pTexto = document.createTextNode("Unidades: 1");
+                    pUnidades.appendChild(pTexto);
+                    div.appendChild(pUnidades);
+                    /*Introduzco las unidades del nuevo articulo del carrito en 
+                    * el array listaUnidades*/
+                    listaUnidades.push(1);
+                    /* Creo otro parrafo para el precio total del producto y lo inserto */
+                    var pTotal = document.createNode("p");
+                    /*Extraigo el precio del articulo para insertarlo al total*/
+                    var ps = document.getElementById(idArticulo);
+                    pTexto = document.createNode("Total: ")
+                    
+                    
+                    document.getElementById("carrito").appendChild(div); 
+                }
+            }
+              
+        </script>
+    </head>
+    <body>
+        <label><b>Productos </b></label><input type="button" value="Limpiar carrito" onclick="vaciarCarrito();"/>
+        <div id="articulos">
+            <div id="articulo1" onclick="anadirArticulo('articulo1');">
+                <h5>Portátil Hp 250 G4 P5t39es 15.6"</h5>
+                <a href="#" >
+                    <image src="images/image1.png"/>
+                </a>
+                <p>Precio: 205.70€</p>
+            </div>
+            
+            <div id="articulo2" onclick="anadirArticulo('articulo2');">
+                <h5>Portátil HP Stream Notebook 13"</h5>
+                <a href="#" >
+                    <image src="images/image2.jpg" />
+                </a>
+                <p>Precio: 435.60€</p>
+            </div>
+            <div id="articulo3" onclick="anadirArticulo('articulo3');">
+                <h5>Portátil lenovo ideapad ideapad 14"</h5>
+                <a href="#" >
+                    <image src="images/image3.jpg" />
+                </a>
+                <p>Precio: 265.78€</p>
+            </div>
+            <div id="articulo4" onclick="anadirArticulo('articulo4');">
+                <h5>Portátil hp 15,6" Intel Celeron Azul</h5>
+                <a href="#" >
+                    <image src="images/image4.jpg" />
+                </a>
+                <p>Precio: 217.80€</p>
+            </div>
+        </div>
+        <div id="totalCarrito">
+            <p><b>Carrito</b></p>
+            <p>Precio total: 0€</p>
+        </div>
+        <div id="carrito">
+            
+        </div>
+    </body>
+</html>
